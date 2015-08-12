@@ -1,4 +1,5 @@
 require 'sinatra/base'
+require 'sinatra/flash'
 require_relative '../data_mapper_setup'
 require_relative './models/link'
 
@@ -6,6 +7,7 @@ class App < Sinatra::Base
 
   enable :sessions
   set :sessions_secret, 'super secret'
+  register Sinatra::Flash
 
   get '/' do
     erb :'/index'
@@ -36,14 +38,25 @@ class App < Sinatra::Base
   end
 
   get '/users/new' do
+    @user = User.new
     erb :'users/new'
   end
 
   post '/users' do
-    user = User.create(email: params[:email],
-              password: params[:password])
-    session[:user_id] = user.id
-    redirect to('/')
+    @user = User.create(email: params[:email],
+              password: params[:password],
+              password_confirmation: params[:password_confirmation])
+    # the user.id will be nil if the user wasn't saved
+    # because of password mismatch
+    if @user.save #save returns true/false depending on wheter the model is successfully saved to a database
+      session[:user_id] = @user.id
+      redirect to('/')
+      # if it's not valid
+      # we'll render the sing up form again
+    else
+      flash.now[:notice] = "Password and confirmation password do not match"
+      erb :'users/new'
+    end
   end
 
   helpers do

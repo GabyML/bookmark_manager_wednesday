@@ -10,6 +10,7 @@ ruby '2.2.2'
 	gem 'bcrypt'
 	gem 'data_mapper'
 	gem 'dm-postgres-adapter'
+	gem 'sinatra-flash'
 
 group :test do
 
@@ -19,4 +20,5 @@ group :test do
 	gem 'database_cleaner'
 
 end
+
 
