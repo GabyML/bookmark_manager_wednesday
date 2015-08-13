@@ -14,9 +14,11 @@ class User
     # http://datamapper.org/docs/validations.html
 
     validates_confirmation_of :password
+    validates_presence_of :password
+    validates_uniqueness_of :email
 
 	property :id, Serial
-	property :email, String
+	property :email, String, required: true # required: true will generate a NOT NULL constraint on the users table.
     # this will store both the password and the salt
     # It's Text and not String because String holds
     # 50 characters by default
@@ -35,5 +37,16 @@ class User
         @password = password
     	self.password_digest = BCrypt::Password.create(password)
     end
+
+    def self.authenticate(email, password)
+        user = first(email: email)
+        if user && BCrypt::Password.new(user.password_digest) == password
+            user
+        else
+            nil
+        end
+    end
+
+    #validates_presence_of :email # This DataMapper validation will prevent the model from saving if the email is blank.
     
 end
