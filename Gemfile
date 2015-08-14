@@ -12,6 +12,7 @@ ruby '2.2.2'
 	gem 'dm-postgres-adapter'
 	gem 'sinatra-flash'
 	gem 'factory_girl'
+	gem 'sinatra-partial'
 
 group :test do
 
