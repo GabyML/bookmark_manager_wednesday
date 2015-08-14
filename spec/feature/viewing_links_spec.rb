@@ -1,5 +1,4 @@
 require 'spec_helper'
-require_relative '../../data_mapper_setup.rb'
 
 feature 'Viewing links' do
 

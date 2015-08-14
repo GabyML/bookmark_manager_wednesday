@@ -13,6 +13,7 @@ ruby '2.2.2'
 	gem 'sinatra-flash'
 	gem 'factory_girl'
 	gem 'sinatra-partial'
+	gem 'rack'
 
 group :test do
 

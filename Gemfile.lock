@@ -136,6 +136,7 @@ DEPENDENCIES
   dm-postgres-adapter
   factory_girl
   pg
+  rack
   rspec
   rspec-sinatra
   shotgun
